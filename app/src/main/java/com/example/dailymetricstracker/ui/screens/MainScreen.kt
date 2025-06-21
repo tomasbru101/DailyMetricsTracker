@@ -53,33 +53,29 @@ fun MainScreen(
             )
         }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(metricsWithEntries) { metricWithEntry ->
-                    MetricItem(metricWithEntry, onValueChange = { value ->
-                        viewModel.updateEntry(metricWithEntry.metric.id, value)
-                    })
-                }
+        LazyColumn(modifier = Modifier.padding(paddingValues)) {
+            items(metricsWithEntries) { metricWithEntry ->
+                MetricItem(metricWithEntry, onValueChange = { value ->
+                    viewModel.updateEntry(metricWithEntry.metric.id, value)
+                })
             }
-            Divider(modifier = Modifier.padding(vertical = 8.dp))
-            Text(
-                "All Entries",
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(16.dp)
-            )
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                item {
-                    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-                        Text("Date", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
-                        Text("Metric", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
-                        Text("Value", modifier = Modifier.weight(0.5f), style = MaterialTheme.typography.titleMedium)
-                    }
-                    Divider()
+            item {
+                Divider(modifier = Modifier.padding(vertical = 8.dp))
+                Text(
+                    "All Entries",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(16.dp)
+                )
+                Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                    Text("Date", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+                    Text("Metric", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+                    Text("Value", modifier = Modifier.weight(0.5f), style = MaterialTheme.typography.titleMedium)
                 }
-                items(allEntries) { entryWithMetricName ->
-                    AllEntriesItem(entryWithMetricName, viewModel::formatDate)
-                    Divider()
-                }
+                Divider()
+            }
+            items(allEntries) { entryWithMetricName ->
+                AllEntriesItem(entryWithMetricName, viewModel::formatDate)
+                Divider()
             }
         }
     }
